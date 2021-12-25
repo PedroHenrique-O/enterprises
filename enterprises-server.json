@@ -1,0 +1,19 @@
+{
+  "enterprises": [
+    {
+      "name": "Empório Real 12",
+      "status": "Breve",
+      "purpose": "Comercial",
+      "ri_number": "",
+      "address": {
+        "district": "Jardim do Ingá",
+        "city": "Luziânia",
+        "street": "Rua Fernando Dias Paes",
+        "state": "GO",
+        "number": "127",
+        "cep": "72850-210"
+      },
+      "_id": "PA03"
+    }
+  ]
+}
