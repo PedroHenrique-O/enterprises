@@ -48,7 +48,7 @@ export const Wrapper = styled.div`
       border-color: var(--outline-gray-dark);
 
       &:hover {
-        /* border-color: var(--border-color-hover); */
+       
         border-color:  ${darken(0.3, "#bbb8d9")};
       }
     }
