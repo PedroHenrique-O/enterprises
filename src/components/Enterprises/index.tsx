@@ -100,7 +100,7 @@ const Interprises = ({ enterprises }: EnterpriseIterface) => {
         </div>
 
         {formatEnterprises
-          .slice(pagInicio, pageFim)
+
           .filter((val) => {
             if (searchBar == "") {
               return val;
@@ -110,6 +110,7 @@ const Interprises = ({ enterprises }: EnterpriseIterface) => {
               return val;
             }
           })
+          .slice(pagInicio, pageFim)
           .map((enterprises) => (
             <div key={enterprises._id} className="listWrapp">
               <div className="itemWrapp">
