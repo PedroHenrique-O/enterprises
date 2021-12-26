@@ -80,8 +80,8 @@ const AddPage = () => {
 
   return (
     <>
+      <Nav title="< Cadastro de empreendimento" />
       <Container>
-        <Nav title="< Cadastro de empreendimento" />
         <Wrapper>
           <h3>Informações </h3>
           <select
@@ -92,7 +92,7 @@ const AddPage = () => {
             <option value="Lançamento"> Lançamento </option>
             <option value="Breve "> Breve Lançamento </option>
             <option value="Em obra"> Em obras </option>
-            <option value="Pronto"> Pronto para morar </option>
+            <option value="Pronto"> Pronto </option>
           </select>
 
           <input

@@ -1,6 +1,8 @@
 import { api } from "../services/api";
 import Enterprises from "../components/Enterprises";
 
+import { GetStaticProps } from "next";
+
 interface EnterprisesProps {
   _id: string;
   name: string;
@@ -24,15 +26,16 @@ const Home = ({ enterprises }: HomeProps) => {
   return <Enterprises enterprises={enterprises} />;
 };
 
-export async function getServerSideProps() {
-  const rest = await api.get("/enterprises");
-  const data = await rest.data;
+export const getServerSideProps: GetStaticProps = async ({ params }) => {
+  console.log(params);
+  const resp = await api.get(`/enterprises`);
+  const data = await resp.data;
 
   const enterprises = data;
 
   return {
     props: { enterprises },
   };
-}
+};
 
 export default Home;

@@ -12,7 +12,23 @@ export const Button = styled.button`
   font-weight: 700;
   font-size: 1rem;
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    line-height: 10px;
+
+    height: 30px;
+    margin-right: 2rem;
+    font-size: 0.8rem;
+  }
   &:hover {
     background-color: ${darken(0.2, "#4F46BB")};
+  }
+
+  span {
+    margin-left: 0.3rem;
   }
 `;

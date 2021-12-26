@@ -1,15 +1,17 @@
-import { Container } from "../../pages/home.styles";
+import { Container, Pagination } from "../../pages/home.styles";
 
 import { FiSearch, FiTrash, FiEdit2 } from "react-icons/fi";
-import Nav from "../../components/Nav";
+import Nav from "../Nav";
 import { useState } from "react";
 
 import { useRouter } from "next/router";
 import { api } from "../../services/api";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GetStaticProps } from "next";
+
+import { GrFormNext } from "react-icons/gr";
+import { GrFormPrevious } from "react-icons/gr";
 
 interface EnterprisesProps {
   _id: string;
@@ -34,6 +36,11 @@ interface EnterpriseIterface {
 const Interprises = ({ enterprises }: EnterpriseIterface) => {
   const router = useRouter();
 
+  const [searchBar, setSearchBar] = useState("");
+
+  const [pagInicio, setPageInicio] = useState(0);
+  const [pageFim, setPageFim] = useState(10);
+
   const [formatEnterprises, setFormatEnterprises] =
     useState<EnterprisesProps[]>(enterprises);
 
@@ -53,6 +60,27 @@ const Interprises = ({ enterprises }: EnterpriseIterface) => {
     setFormatEnterprises(enterpriseDeleted);
   };
 
+  const handleIncrementPagination = () => {
+    console.log(formatEnterprises.length);
+    if (pageFim >= formatEnterprises.length) {
+      toast.warn("Você chegou ao fim...");
+      return;
+    }
+    console.log(formatEnterprises.length);
+    setPageInicio((prev) => prev + 10);
+    setPageFim((prev) => prev + 10);
+  };
+
+  const handleDecrementPagination = () => {
+    if (pagInicio <= 0) {
+      toast.warn("Você já está no início...");
+      return;
+    }
+
+    setPageInicio((prev) => prev - 10);
+    setPageFim((prev) => prev - 10);
+  };
+
   return (
     <>
       <Nav title="Empreendimentos" />
@@ -63,47 +91,74 @@ const Interprises = ({ enterprises }: EnterpriseIterface) => {
             color="#302E45"
             size="1.5em"
           />
-          <input type="text" placeholder="Buscar" />
+          <input
+            type="text"
+            value={searchBar}
+            onChange={(e) => setSearchBar(e.target.value)}
+            placeholder="Buscar"
+          />
         </div>
 
-        {formatEnterprises.map((enterprises) => (
-          <div key={enterprises._id} className="listWrapp">
-            <div className="itemWrapp">
-              <div className="itemInfoWrapp">
-                <div className="itemInfo">
-                  <div className="titleWrapp">
-                    <h1> {enterprises.name} </h1>
-                    <div className="optionsWrapp">
-                      <button
-                        onClick={() => handleOpenEditPage(enterprises)}
-                        className="edit-btn"
-                      >
-                        <FiEdit2 size="1.3rem" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteEnterprise(enterprises)}
-                        className="delete-btn"
-                      >
-                        <FiTrash size="1.3rem" />
-                      </button>
+        {formatEnterprises
+          .slice(pagInicio, pageFim)
+          .filter((val) => {
+            if (searchBar == "") {
+              return val;
+            } else if (
+              val.name.toLocaleLowerCase().includes(searchBar.toLowerCase())
+            ) {
+              return val;
+            }
+          })
+          .map((enterprises) => (
+            <div key={enterprises._id} className="listWrapp">
+              <div className="itemWrapp">
+                <div className="itemInfoWrapp">
+                  <div className="itemInfo">
+                    <div className="titleWrapp">
+                      <h1> {enterprises.name} </h1>
+                      <div className="optionsWrapp">
+                        <button
+                          onClick={() => handleOpenEditPage(enterprises)}
+                          className="edit-btn"
+                        >
+                          <FiEdit2 size="1.3rem" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteEnterprise(enterprises)}
+                          className="delete-btn"
+                        >
+                          <FiTrash size="1.3rem" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
 
-                  <p key={enterprises._id}>
-                    {enterprises.address?.street}, {enterprises.address?.number}
-                    - {enterprises.address?.city},{" "}
-                    {enterprises.address?.district}
-                  </p>
+                    <p key={enterprises._id}>
+                      {enterprises.address?.street},{" "}
+                      {enterprises.address?.number}- {enterprises.address?.city}
+                      , {enterprises.address?.district}
+                    </p>
+                  </div>
+                </div>
+                <div className="buttonWrapp">
+                  <button>{enterprises.status}</button>
+                  <button>{enterprises.purpose}</button>
                 </div>
               </div>
-              <div className="buttonWrapp">
-                <button>{enterprises.status}</button>
-                <button>{enterprises.purpose}</button>
-              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </Container>
+      {formatEnterprises.length && (
+        <Pagination>
+          <div onClick={handleDecrementPagination} className="prevBtn">
+            <GrFormPrevious size="30" />
+          </div>
+
+          <div onClick={handleIncrementPagination}>
+            <GrFormNext size="30" />
+          </div>
+        </Pagination>
+      )}
     </>
   );
 };

@@ -7,6 +7,9 @@ export const Container = styled.div`
   background: var(--background);
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 
   .addWrapp {
     display: flex;
@@ -21,7 +24,7 @@ export const Wrapper = styled.div`
   height: auto;
   border-radius: 8px;
   padding: 1.2em 1.3rem;
- 
+
     
   input, select {
  

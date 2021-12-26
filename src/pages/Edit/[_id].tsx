@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "../../components/Button/styles";
 import { Container, Wrapper } from "../../styles/styles";
 import Nav from "../../components/Nav";
-import { api, apiCep } from "../../services/api";
+import { api } from "../../services/api";
 
 import { useRouter } from "next/router";
 import { GetStaticProps } from "next";
@@ -38,7 +38,7 @@ interface editEnterprise {
 
 const EditPage = ({ data }: editEnterprise) => {
   const router = useRouter();
-  const [formattedEnterprise, setFormatEnterprises] = useState<any>();
+
   const [lauchField, setLauchField] = useState(data?.status);
   const [enterprisesField, setEnterprisesField] = useState(data?.name);
   const [residentialField, setResidentialField] = useState(data?.purpose);
@@ -49,71 +49,53 @@ const EditPage = ({ data }: editEnterprise) => {
   const handleGetUserCepInfo = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const cep = e.target.value;
+    try {
+      const cep = e.target.value;
 
-    const response = await fetch(`https://viacep.com.br/ws/${cep}/json`);
-    const data = await response.json();
-    setCepInfoField({
-      state: data?.uf,
-      cep: data?.cep,
-      city: data?.localidade,
-      district: data?.bairro,
-      number: data.siafi,
-      street: data?.logradouro,
-    });
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json`);
+      const data = await response.json();
+      setCepInfoField({
+        state: data?.uf,
+        cep: data?.cep,
+        city: data?.localidade,
+        district: data?.bairro,
+        number: data.siafi,
+        street: data?.logradouro,
+      });
+    } catch (er) {
+      toast.error("Insira um CEP válido!");
+    }
   };
 
-  const handleAddEnterprise = async () =>
-    //formattedEnterprise: EnterprisesPropsEDITPAGE
-    {
-      const request = {
-        name: enterprisesField,
-        status: lauchField,
-        purpose: residentialField,
-        ri_number: "",
-        address: {
-          district: cepInfoField?.district,
-          city: cepInfoField?.city,
-          street: cepInfoField?.street,
-          state: cepInfoField?.state,
-          number: numberField,
-          cep: cepInfoField?.cep,
-        },
-      };
-
-      const response = await api.put(`/enterprises/${data._id}`, request);
-      console.log(response);
-      toast.success("Editado com sucesso!");
-
-      setTimeout(function () {
-        router.push("/");
-      }, 1600);
+  const handleAddEnterprise = async () => {
+    const request = {
+      name: enterprisesField,
+      status: lauchField,
+      purpose: residentialField,
+      ri_number: "",
+      address: {
+        district: cepInfoField?.district,
+        city: cepInfoField?.city,
+        street: cepInfoField?.street,
+        state: cepInfoField?.state,
+        number: numberField,
+        cep: cepInfoField?.cep,
+      },
     };
 
-  // const handleSubmit = () => {
-  //   const enterpriseData = {
-  //     name: enterprisesField,
-  //     status: lauchField,
-  //     purpose: residentialField,
-  //     ri_number: "",
-  //     address: {
-  //       district: cepInfoField?.district,
-  //       city: cepInfoField?.city,
-  //       street: cepInfoField?.street,
-  //       state: cepInfoField?.state,
-  //       number: numberField,
-  //       cep: cepInfoField?.cep,
-  //     },
-  //   };
+    const response = await api.put(`/enterprises/${data._id}`, request);
+    console.log(response);
+    toast.success("Empreendimento editado com sucesso!");
 
-  //   // setFormatEnterprises(enterpriseData);
-  //   // handleAddEnterprise(formattedEnterprise);
-  // };
+    setTimeout(function () {
+      router.push("/");
+    }, 1600);
+  };
 
   return (
     <>
+      <Nav title="< Editar empreendimento" />
       <Container>
-        <Nav title="< Editar empreendimento" />
         <Wrapper>
           <h3>Informações </h3>
           <select
@@ -122,9 +104,9 @@ const EditPage = ({ data }: editEnterprise) => {
             name="select"
           >
             <option value="Lançamento"> Lançamento </option>
-            <option value="Breve Lançamento "> Breve Lançamento </option>
+            <option value="Breve "> Breve Lançamento </option>
             <option value="Em obra"> Em obras </option>
-            <option value="Pronto para morar"> Pronto para morar </option>
+            <option value="Pronto"> Pronto </option>
           </select>
 
           <input

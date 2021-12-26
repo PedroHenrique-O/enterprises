@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "../Button/styles";
 import { Container } from "./styles";
@@ -16,7 +17,9 @@ export default function Nav({ title }: NavProps) {
       <header>
         <h1 onClick={() => router.push("/")}>{title}</h1>
         {pathname === "/" && (
-          <Button onClick={() => router.push("/addPage")}>Adicionar + </Button>
+          <Button onClick={() => router.push("/addPage")}>
+            Adicionar<span> + </span>
+          </Button>
         )}
       </header>
     </Container>
