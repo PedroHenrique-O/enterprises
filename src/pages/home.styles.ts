@@ -124,17 +124,17 @@ export const Container = styled.main`
     }
 
     .buttonWrapp {
-      margin-left: -2rem;
+      margin-left: 32px;
       @media screen and (max-width: 768px) {
         display: flex;
         flex-direction: column;
         margin-left: 1rem;
-        gap: 0.6rem;
+        gap: 1rem;
       }
       button {
         font-size: 12px;
         line-height: 12px;
-        width: 113px;
+        width: 118px;
         height: 28px;
         background: none;
         border: 1px solid var(--brandcolor-primary-light);
