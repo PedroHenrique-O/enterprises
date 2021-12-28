@@ -6,13 +6,14 @@
 <li> Typescript </li>
 <li> Jest </li>
 <li> JSON server </li>
+<li> ViaCEP </li>
 
 <h1>About the application: </h1>
 
 <p>
 
 Enterprises é uma aplicação que auxilia o usuário na gerência de empreendimentos.
-O usuário pode adicionar, editar, e excluir empreendimentos. Os dados são populados através do ServerSide.
+O usuário pode adicionar, editar, e excluir empreendimentos. Os dados são populados através do ServerSide. Também foi feita a integração com o ViaCEP para consulta de informações referentes ao CEP do usuário.
 
 </p>
 
