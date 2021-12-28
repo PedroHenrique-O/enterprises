@@ -11,14 +11,15 @@
 
 <p>
 
-SpaceTravelling é um desafio obrigário do bootcamp da @Rocketseat. Onde foi proposta a criação de um blog integrado ao PrismicCMS, utilizando o GetStaticProps e GetStaticPaths para criação de rotas dinâmicas e estáticas.
+Enterprises é uma aplicação que auxilia o usuário na gerência de empreendimentos.
+O usuário pode adicionar, editar, e excluir empreendimentos. Os dados são populados através do ServerSide.
 
 </p>
 
 <h1> How to install </h1>
 <p>
 
-Use o comando `yarn` ou `npm install` para instalar as dependências do projeto..<br/>
+Use o comando `yarn` ou `npm install` para instalar as dependências do projeto...<br/>
 Inicie o JSON server com `yarn serve`.<br/>
 Inicie o projeto com `yarn dev`.<br/>
 
