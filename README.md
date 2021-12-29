@@ -4,7 +4,6 @@
 
 <li> Next JS </li>
 <li> Typescript </li>
-<li> Jest </li>
 <li> JSON server </li>
 <li> ViaCEP </li>
 
